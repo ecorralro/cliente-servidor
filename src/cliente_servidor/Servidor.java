@@ -12,6 +12,7 @@ public class Servidor {
 	public static void main(String[] args) {
 		// Declaración de variables
 		final int puerto = 5678;
+		String mensajeCliente;
 		
 		try {
 			// creo socket y espero conexión con el puerto
@@ -24,11 +25,28 @@ public class Servidor {
 			BufferedReader entradaCliente = new BufferedReader(new InputStreamReader(clienteSocket.getInputStream()));
 			PrintWriter salidaCliente = new PrintWriter(clienteSocket.getOutputStream(), true);// true realiza autoflush sin necesidad de hacer un posterior salidaCliente.flush()
 			
+			// comunicación con el cliente
+			while (true) {
+				// lee el mensaje enviado por el cliente
+				mensajeCliente = entradaCliente.readLine();
+				System.out.println("El cliente dice: " + mensajeCliente);
+				// enviar respuesta a cliente
+				salidaCliente.println();
+				// si el mensaje es quit salir del bucle
+				if (mensajeCliente.equalsIgnoreCase("quit")) {
+					break;
+				}
+				
+				
+				
+			}
+			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
 			// cerrar conexion
+			System.out.println("Conexión finalizada.");
 		}
 
 	}
