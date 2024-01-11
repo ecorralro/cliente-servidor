@@ -13,6 +13,7 @@ public class Servidor {
 		// Declaración de variables
 		final int puerto = 5678;
 		String mensajeCliente;
+		int numeroLetras;
 		
 		try {
 			// creo socket y espero conexión con el puerto
@@ -30,8 +31,10 @@ public class Servidor {
 				// lee el mensaje enviado por el cliente
 				mensajeCliente = entradaCliente.readLine();
 				System.out.println("El cliente dice: " + mensajeCliente);
+				// procesamos el mensaje del cliente
+				numeroLetras = contarLetras(mensajeCliente);
 				// enviar respuesta a cliente
-				salidaCliente.println();
+				salidaCliente.println("El número de letras del texto introducdo por el usuario es: " + numeroLetras);
 				// si el mensaje es quit salir del bucle
 				if (mensajeCliente.equalsIgnoreCase("quit")) {
 					break;
@@ -49,6 +52,17 @@ public class Servidor {
 			System.out.println("Conexión finalizada.");
 		}
 
+	}
+	private static int contarLetras(String texto) {
+		int contador = 0;
+		
+		for (int i = 0; i < texto.length(); i++) {
+			if (Character.isLetter(texto.charAt(i))) {
+				contador++;
+			}
+			
+		}
+		return contador;
 	}
 
 }
