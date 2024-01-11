@@ -14,7 +14,7 @@ public class Servidor {
 		final int puerto = 5678;
 		String mensajeCliente;
 		int numeroLetras;
-		
+
 		try {
 			// creo socket y espero conexión con el puerto
 			ServerSocket servidorSocket = new ServerSocket(puerto);
@@ -22,10 +22,13 @@ public class Servidor {
 			// acepto la conexión del socket del cliente
 			Socket clienteSocket = servidorSocket.accept();
 			System.out.println("La conexión se ha establecido con el cliente.");
-			//flujos de entrada y salida para comunicarse con el cliente
+			// flujos de entrada y salida para comunicarse con el cliente
 			BufferedReader entradaCliente = new BufferedReader(new InputStreamReader(clienteSocket.getInputStream()));
-			PrintWriter salidaCliente = new PrintWriter(clienteSocket.getOutputStream(), true);// true realiza autoflush sin necesidad de hacer un posterior salidaCliente.flush()
-			
+			PrintWriter salidaCliente = new PrintWriter(clienteSocket.getOutputStream(), true);// true realiza autoflush
+																								// sin necesidad de
+																								// hacer un posterior
+																								// salidaCliente.flush()
+
 			// comunicación con el cliente
 			while (true) {
 				// lee el mensaje enviado por el cliente
@@ -39,28 +42,28 @@ public class Servidor {
 				if (mensajeCliente.equalsIgnoreCase("quit")) {
 					break;
 				}
-				
-				
-				
+
 			}
-			
-			
+			clienteSocket.close();
+			servidorSocket.close();
+
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			// cerrar conexion
 			System.out.println("Conexión finalizada.");
 		}
 
 	}
+
 	private static int contarLetras(String texto) {
 		int contador = 0;
-		
+
 		for (int i = 0; i < texto.length(); i++) {
 			if (Character.isLetter(texto.charAt(i))) {
 				contador++;
 			}
-			
+
 		}
 		return contador;
 	}
